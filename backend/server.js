@@ -43,17 +43,16 @@ sequelize.sync({ alter: true }).then(async () => {
 
   const adminExiste = await Usuario.findOne({ where: { email: 'admin@sgat.com' } });
   if (adminExiste) {
-    await adminExiste.update({ password: 'Admin1234' });
-  } else {
-    await Usuario.create({
-      nombre: 'Administrador SGAT',
-      email: 'admin@sgat.com',
-      password: await bcrypt.hash('Admin1234', 10),
-      rol: 'admin',
-      estado: 'activo',
-    });
-    console.log('Usuario administrador creado: admin@sgat.com / Admin1234');
+    await adminExiste.destroy();
   }
+  await Usuario.create({
+    nombre: 'Administrador SGAT',
+    email: 'admin@sgat.com',
+    password: await bcrypt.hash('Admin1234', 10),
+    rol: 'admin',
+    estado: 'activo',
+  });
+  console.log('Usuario administrador recreado: admin@sgat.com / Admin1234');
 
   app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
