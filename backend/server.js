@@ -41,12 +41,10 @@ app.use((err, req, res, next) => {
 sequelize.sync({ alter: true }).then(async () => {
   console.log('Base de datos SQLite sincronizada.');
 
-  
   const adminExiste = await Usuario.findOne({ where: { email: 'admin@sgat.com' } });
-if (adminExiste) {
-  await adminExiste.update({ password: await bcrypt.hash('Admin1234', 10) });
-}
-if (!adminExiste) {
+  if (adminExiste) {
+    await adminExiste.update({ password: 'Admin1234' });
+  } else {
     await Usuario.create({
       nombre: 'Administrador SGAT',
       email: 'admin@sgat.com',
