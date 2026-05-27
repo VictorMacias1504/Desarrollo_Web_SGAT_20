@@ -43,7 +43,10 @@ sequelize.sync({ alter: true }).then(async () => {
 
   
   const adminExiste = await Usuario.findOne({ where: { email: 'admin@sgat.com' } });
-  if (!adminExiste) {
+if (adminExiste) {
+  await adminExiste.update({ password: await bcrypt.hash('Admin1234', 10) });
+}
+if (!adminExiste) {
     await Usuario.create({
       nombre: 'Administrador SGAT',
       email: 'admin@sgat.com',
