@@ -46,12 +46,12 @@ sequelize.sync({ alter: true }).then(async () => {
     await adminExiste.destroy();
   }
   await Usuario.create({
-    nombre: 'Administrador SGAT',
-    email: 'admin@sgat.com',
-    password: await bcrypt.hash('Admin1234', 10),
-    rol: 'admin',
-    estado: 'activo',
-  });
+  nombre: 'Administrador SGAT',
+  email: 'admin@sgat.com',
+  password: 'Admin1234',
+  rol: 'admin',
+  estado: 'activo',
+});
   console.log('Usuario administrador recreado: admin@sgat.com / Admin1234');
 
   app.listen(PORT, () => {
